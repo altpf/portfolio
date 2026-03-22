@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Michelle Jose — Product Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.cdnfonts.com/css/faktum" rel="stylesheet" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: #fff;
+      color: #111;
+    }
+
+    .pf {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2.5rem 6rem;
+    }
+    .pf.dark { background: #0d0d0d; color: #c4c4c4; }
+    body.dark { background: #0d0d0d; }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 0;
+      margin-bottom: 4rem;
+    }
+
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px; font-weight: 400;
+      color: #111; text-decoration: none;
+    }
+    .pf.dark .nav-logo { color: #c4c4c4; }
+
+    .nav-links {
+      display: flex; gap: 2rem;
+      list-style: none; align-items: center;
+    }
+
+    .nav-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      background: none; border: none; box-shadow: none; outline: none;
+      cursor: pointer; color: #999; letter-spacing: 0.02em;
+      padding: 0; transition: color 0.15s; position: relative;
+      -webkit-appearance: none; appearance: none;
+    }
+    .nav-btn:hover { color: #111; }
+    .nav-btn.active { color: #111; }
+    .nav-btn.active::after {
+      content: ''; position: absolute;
+      bottom: -3px; left: 0; right: 0;
+      height: 1px; background: #6f6cff;
+    }
+    .pf.dark .nav-btn { color: #444; }
+    .pf.dark .nav-btn.active, .pf.dark .nav-btn:hover { color: #c4c4c4; }
+
+    .toggle {
+      width: 26px; height: 14px; background: none;
+      border: 0.5px solid #ccc; border-radius: 8px;
+      cursor: pointer; position: relative; flex-shrink: 0;
+    }
+    .toggle::after {
+      content: ''; position: absolute; width: 8px; height: 8px;
+      border-radius: 50%; background: #bbb; top: 2px; left: 3px;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .pf.dark .toggle { border-color: #333; }
+    .pf.dark .toggle::after { transform: translateX(11px); background: #6f6cff; }
+
+    /* HERO */
+    .hero { margin-bottom: 5rem; }
+
+    .hero-name {
+      font-family: 'Faktum', 'DM Mono', sans-serif;
+      font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+      font-weight: 400; letter-spacing: -0.025em;
+      line-height: 1.05; margin-bottom: 0.4rem;
+    }
+    .hero-name span { color: #6f6cff; }
+
+    .hero-location {
+      font-size: 12px; color: #aaa;
+      letter-spacing: 0.02em; margin-bottom: 2.5rem;
+    }
+
+    .hero-bio {
+      font-size: 12.5px; color: #666;
+      line-height: 1.9; max-width: 500px;
+    }
+    .pf.dark .hero-bio { color: #666; }
+    .hero-bio a { color: #6f6cff; text-decoration: none; }
+    .hero-bio a:hover { text-decoration: underline; }
+
+    /* PANELS */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* CASE ITEMS */
+    .case-item {
+      border-top: 0.5px solid #ebebeb;
+      padding: 2.5rem 0;
+    }
+    .pf.dark .case-item { border-color: #1e1e1e; }
+    .case-item:last-child { border-bottom: 0.5px solid #ebebeb; }
+    .pf.dark .case-item:last-child { border-color: #1e1e1e; }
+
+    .case-top {
+      display: grid; grid-template-columns: 2.5rem 1fr;
+      gap: 1.5rem; cursor: pointer; transition: opacity 0.15s;
+      margin-bottom: 1.5rem;
+    }
+    .case-top:hover { opacity: 0.65; }
+
+    .case-num { font-size: 10px; color: #ccc; letter-spacing: 0.06em; padding-top: 5px; }
+    .pf.dark .case-num { color: #333; }
+
+    .case-title {
+      font-family: 'Faktum', 'DM Mono', sans-serif;
+      font-size: 1.05rem; font-weight: 400;
+      line-height: 1.35; letter-spacing: -0.01em;
+      margin-bottom: 0.6rem;
+    }
+    .pf.dark .case-title { color: #c4c4c4; }
+
+    .case-stat {
+      font-family: 'Faktum', 'DM Mono', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 400; color: #6f6cff;
+      letter-spacing: -0.02em; line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .case-stat-label {
+      font-size: 10px; color: #aaa;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    .pf.dark .case-stat-label { color: #444; }
+
+    .case-arrow { color: #6f6cff; font-size: 0.85rem; flex-shrink: 0; float: right; margin-top: 4px; }
+
+    .case-desc {
+      font-size: 11.5px; color: #777; line-height: 1.75;
+      margin-bottom: 1rem; max-width: 540px;
+    }
+    .pf.dark .case-desc { color: #555; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .tag {
+      font-size: 9.5px; letter-spacing: 0.05em;
+      padding: 2px 7px; border: 0.5px solid #ddd;
+      color: #aaa; text-transform: uppercase;
+    }
+    .pf.dark .tag { border-color: #252525; color: #444; }
+    .tag.hi { border-color: #6f6cff; color: #6f6cff; }
+
+    .case-image {
+      width: 100%; aspect-ratio: 16/7;
+      background: #f7f7f5; border: 1px dashed #e0e0e0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pf.dark .case-image { background: #141414; border-color: #2a2a2a; }
+    .case-image-label {
+      font-size: 10px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #ccc; text-align: center;
+    }
+    .case-image-label span { display: block; font-size: 18px; margin-bottom: 4px; }
+
+    /* BRAND */
+    .brand-entry { padding: 3rem 0; border-top: 0.5px solid #ebebeb; }
+    .pf.dark .brand-entry { border-color: #1e1e1e; }
+    .brand-entry:last-child { border-bottom: 0.5px solid #ebebeb; }
+    .brand-entry.tinted { background: #fafaf8; margin: 0 -2.5rem; padding-left: 2.5rem; padding-right: 2.5rem; }
+    .pf.dark .brand-entry.tinted { background: #111; }
+    .brand-meta { display: flex; gap: 0.75rem; margin-bottom: 0.85rem; flex-wrap: wrap; align-items: center; }
+    .brand-year { font-size: 11px; color: #aaa; font-style: italic; }
+    .brand-pill { font-size: 9.5px; letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 7px; border: 0.5px solid #ddd; color: #aaa; }
+    .pf.dark .brand-pill { border-color: #252525; color: #444; }
+    .brand-title { font-family: 'Faktum', sans-serif; font-size: 1.3rem; font-weight: 400; letter-spacing: -0.015em; margin-bottom: 0.25rem; }
+    .pf.dark .brand-title { color: #c4c4c4; }
+    .brand-sub { font-size: 12px; color: #888; line-height: 1.6; margin-bottom: 1.3rem; font-style: italic; }
+    .brand-imgs { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-bottom: 1rem; }
+    .brand-img { background: #f0f0ee; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #ccc; letter-spacing: 0.08em; text-transform: uppercase; }
+    .pf.dark .brand-img { background: #181818; color: #2e2e2e; }
+    .tinted .brand-img { background: #e8e8e5; }
+    .brand-desc { font-size: 11.5px; color: #777; line-height: 1.75; max-width: 520px; }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; }
+    .about-p { font-size: 12.5px; color: #666; line-height: 1.9; margin-bottom: 1.2rem; }
+    .about-link { color: #6f6cff; font-size: 12px; text-decoration: none; }
+    .exp-lbl { font-size: 9.5px; letter-spacing: 0.09em; text-transform: uppercase; color: #bbb; margin-bottom: 0.6rem; display: block; }
+    .exp-item { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 0.5px solid #ebebeb; font-size: 12px; }
+    .pf.dark .exp-item { border-color: #1e1e1e; }
+    .exp-co { font-family: 'Faktum', sans-serif; font-weight: 400; }
+    .exp-r { font-size: 11px; color: #999; margin-top: 2px; }
+    .exp-y { font-size: 11px; color: #bbb; font-style: italic; flex-shrink: 0; margin-left: 1rem; align-self: center; }
+
+    .site-footer {
+      margin-top: 5rem; padding-top: 1.5rem;
+      border-top: 0.5px solid #ebebeb;
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: #bbb; letter-spacing: 0.03em;
+    }
+    .pf.dark .site-footer { border-color: #1e1e1e; color: #333; }
+
+    @media(max-width:640px){
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .nav-links { gap: 1.25rem; }
+      .brand-imgs { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+<div class="pf" id="pf">
+
+  <nav>
+    <a class="nav-logo" href="#">Michelle Jose</a>
+    <ul class="nav-links">
+      <li><button class="nav-btn active" onclick="switchTab('product',this)">product</button></li>
+      <li><button class="nav-btn" onclick="switchTab('brand',this)">brand</button></li>
+      <li><button class="nav-btn" onclick="switchTab('about',this)">about</button></li>
+      <li><button class="toggle" onclick="toggleDark()"></button></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <h1 class="hero-name">michelle jose<span>.</span></h1>
+    <p class="hero-location">product designer — washington, dc area</p>
+    <p class="hero-bio">
+      9+ years designing for fintech, B2B SaaS, and healthcare. I like working on hard problems — the kind where the domain is complex but the experience has to feel simple.<br><br>
+      Born in Manila. Grew up in Virginia. I've been to 20+ countries, written a book, and I'm still figuring out taekwondo.<br><br>
+      <a href="mailto:immichellejose@gmail.com">Say hello →</a>
+    </p>
+  </section>
+
+  <!-- PRODUCT -->
+  <div class="panel active" id="panel-product">
+
+    <div class="case-item">
+      <div class="case-top">
+        <span class="case-num">01</span>
+        <div>
+          <h3 class="case-title">Automating a daily deposit allocation process for a fintech serving 3,000 US banks <span class="case-arrow">↗</span></h3>
+          <div class="case-stat">9 months</div>
+          <div class="case-stat-label">0-to-1 · shipped to production</div>
+          <p class="case-desc">IntraFi's allocation team managed billions in daily deposit movements using a manual spreadsheet — a process already straining under growth and at risk of breaking at scale. I led design end-to-end on a 0-to-1 internal tool to automate it: user flows, complex data tables, production handoff with an international dev team. NDA — happy to walk you through it.</p>
+          <div class="tags">
+            <span class="tag hi">fintech</span>
+            <span class="tag hi">0-to-1</span>
+            <span class="tag hi">internal tool</span>
+            <span class="tag">data tables</span>
+            <span class="tag">lead designer</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-image"><div class="case-image-label"><span>+</span>add a mockup or screenshot</div></div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-top">
+        <span class="case-num">02</span>
+        <div>
+          <h3 class="case-title">Building a design system for a financial platform used by 3,000 banks <span class="case-arrow">↗</span></h3>
+          <div class="case-stat">3,000+</div>
+          <div class="case-stat-label">banks on the platform</div>
+          <p class="case-desc">IntraFi's transaction portal had grown inconsistently over years — mismatched components, accessibility failures, no shared language for the team. I built a WCAG-compliant design system from scratch. When SVB collapsed in 2023 and users surged, the system helped IntraFi scale without breaking.</p>
+          <div class="tags">
+            <span class="tag hi">fintech</span>
+            <span class="tag hi">design system</span>
+            <span class="tag">wcag / a11y</span>
+            <span class="tag">b2b portal</span>
+            <span class="tag">international team</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-image"><div class="case-image-label"><span>+</span>add a mockup or screenshot</div></div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-top">
+        <span class="case-num">03</span>
+        <div>
+          <h3 class="case-title">Career certification platform for Millennial–Gen Z job seekers <span class="case-arrow">↗</span></h3>
+          <p class="case-desc">A collaboration with a graduate design program in Korea — a bilingual (Korean/English) 0-to-1 consumer product helping young job seekers navigate career certifications. I led research, IA, and design system work. Student project, never published.</p>
+          <div class="tags">
+            <span class="tag">consumer</span>
+            <span class="tag">0-to-1</span>
+            <span class="tag">research</span>
+            <span class="tag">bilingual</span>
+            <span class="tag">student project</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-image"><div class="case-image-label"><span>+</span>add a mockup or screenshot</div></div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-top">
+        <span class="case-num">04</span>
+        <div>
+          <h3 class="case-title">Redesigning the Mt. Purrnon Cat Café experience <span class="case-arrow">↗</span></h3>
+          <p class="case-desc">A service design project reimagining the end-to-end guest experience — from discovery and reservation to in-café interactions. Academic project.</p>
+          <div class="tags">
+            <span class="tag">service design</span>
+            <span class="tag">ux research</span>
+            <span class="tag">academic project</span>
+          </div>
+        </div>
+      </div>
+      <div class="case-image"><div class="case-image-label"><span>+</span>add a mockup or screenshot</div></div>
+    </div>
+
+  </div>
+
+  <!-- BRAND -->
+  <div class="panel" id="panel-brand">
+    <div class="brand-entry">
+      <div class="brand-meta"><span class="brand-year">2021</span><span class="brand-pill">brand identity</span><span class="brand-pill">small business</span></div>
+      <h2 class="brand-title">Teaching Outside the Binary</h2>
+      <p class="brand-sub">Logo & website for an education brand that honors the founder's identity</p>
+      <div class="brand-imgs"><div class="brand-img">image</div><div class="brand-img">image</div><div class="brand-img">image</div></div>
+      <p class="brand-desc">Logo and website for Ace Schwarz. The client said it best: "I feel like I have a clean, clear, and marketable brand that honors part of my identity." That's the goal.</p>
+    </div>
+    <div class="brand-entry tinted">
+      <div class="brand-meta"><span class="brand-year">ongoing</span><span class="brand-pill">graphic design</span><span class="brand-pill">nonprofit</span></div>
+      <h2 class="brand-title">Spine Health Foundation</h2>
+      <p class="brand-sub">Web & graphic design for a healthcare nonprofit</p>
+      <div class="brand-imgs"><div class="brand-img">image</div><div class="brand-img">image</div><div class="brand-img">image</div></div>
+      <p class="brand-desc">Visual and web design supporting a nonprofit focused on spine health education and patient advocacy.</p>
+    </div>
+    <div class="brand-entry">
+      <div class="brand-meta"><span class="brand-year">2018–present</span><span class="brand-pill">logo design</span><span class="brand-pill">identity</span></div>
+      <h2 class="brand-title">Selected logo & identity work</h2>
+      <p class="brand-sub">Client projects through MJ Design</p>
+      <div class="brand-imgs"><div class="brand-img">image</div><div class="brand-img">image</div><div class="brand-img">image</div></div>
+      <p class="brand-desc">Brand identities and logos for small businesses and independent clients, 2018–present.</p>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="panel" id="panel-about">
+    <div class="about-grid">
+      <div>
+        <p class="about-p">I'm a product designer with 9+ years building accessible, user-centered digital experiences across fintech, B2B SaaS, and healthcare. I specialize in making complex systems feel intuitive.</p>
+        <p class="about-p">BFA in Graphic Design from George Mason University. UX Certificate from the Nielsen Norman Group. Design mentor on ADPList (2022–2023).</p>
+        <p class="about-p">Lately I've been learning to code and thinking about how AI is reshaping design workflows — which is how this site got built.</p>
+        <p class="about-p">When I'm not designing: mystery novels, pickleball, biking, and planning my next trip. 20+ countries and counting. I learned taekwondo in Seoul.</p>
+        <div style="display:flex;gap:1.5rem;margin-top:1.5rem;">
+          <a class="about-link" href="mailto:immichellejose@gmail.com">email</a>
+          <a class="about-link" href="https://linkedin.com/in/michelle-jose">linkedin</a>
+        </div>
+      </div>
+      <div>
+        <span class="exp-lbl">experience</span>
+        <div class="exp-item"><div><div class="exp-co">IntraFi</div><div class="exp-r">UI/UX Designer</div></div><span class="exp-y">2021–2023</span></div>
+        <div class="exp-item"><div><div class="exp-co">MJ Design</div><div class="exp-r">Brand & Product Designer</div></div><span class="exp-y">2018–present</span></div>
+        <div class="exp-item"><div><div class="exp-co">Carr Properties</div><div class="exp-r">Creative Consultant</div></div><span class="exp-y">2021</span></div>
+        <div class="exp-item"><div><div class="exp-co">Brazen</div><div class="exp-r">Graphic Designer</div></div><span class="exp-y">2017–2020</span></div>
+        <div class="exp-item"><div><div class="exp-co">ADPList</div><div class="exp-r">Design Mentor</div></div><span class="exp-y">2022–2023</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-footer">
+    <span>michellejo.se © 2026</span>
+    <span>designed with claude · deployed on vercel</span>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(name, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+  function toggleDark() {
+    const pf = document.getElementById('pf');
+    pf.classList.toggle('dark');
+    document.body.classList.toggle('dark');
+  }
+</script>
+</body>
+</html>
